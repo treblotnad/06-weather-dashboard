@@ -18,7 +18,8 @@
     <main class="section columns">
       <aside class="column is-3">
         <div class="field">
-          <label class="label is-size-3 has-text-info"
+          <label
+            class="label is-size-4-desktop has-text-info is-size-6-tablet is-size-3-mobile"
             >Search for a City:</label
           >
           <div class="control">
@@ -38,7 +39,17 @@
           </div>
         </div>
       </aside>
-      <section class="column"></section>
+      <section id="forcast" class="column">
+        <div class="card mb-1 is-size-1">current conditions</div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent"></div>
+          <div class="tile is-child column m-2">today</div>
+          <div class="tile is.child column m-2">tomorrow</div>
+          <div class="tile is-child column m-2">2 days</div>
+          <div class="tile is-child column m-2">3 days</div>
+          <div class="tile is-child column m-2">4 days</div>
+        </div>
+      </section>
     </main>
   </body>
 </html>
