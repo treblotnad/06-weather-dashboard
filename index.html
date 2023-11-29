@@ -15,11 +15,27 @@
         <h1 class="title is-2 has-text-white">Weather Dashboard</h1>
       </div>
     </header>
-    <main class="section columns">
-      <aside class="column is-3">
+    <main class="section columns is-desktop is-flex-direction-row-reverse">
+      <section id="forcast" class="column">
+        <div class="columns">
+          <div class="column mb-1 is-size-1 is-10 has-text-centered">
+            Current Conditions
+          </div>
+        </div>
+        <div class="columns is-desktop">
+          <div class="column has-text-centered">today</div>
+          <div class="column has-text-centered">today</div>
+          <div class="column has-text-centered">today</div>
+          <div class="column has-text-centered">today</div>
+          <div class="column has-text-centered">today</div>
+        </div>
+      </section>
+      <aside
+        class="column is-10-mobile is-8-tablet is-3-desktop is-offset-1-mobile is-offset-2-tablet is-offset-0-desktop"
+      >
         <div class="field">
           <label
-            class="label is-size-4-desktop has-text-info is-size-6-tablet is-size-3-mobile"
+            class="label is-size-4-desktop has-text-info is-size-5-tablet is-size-3-mobile"
             >Search for a City:</label
           >
           <div class="control">
@@ -39,17 +55,6 @@
           </div>
         </div>
       </aside>
-      <section id="forcast" class="column">
-        <div class="card mb-1 is-size-1">current conditions</div>
-        <div class="tile is-ancestor">
-            <div class="tile is-parent"></div>
-          <div class="tile is-child column m-2">today</div>
-          <div class="tile is.child column m-2">tomorrow</div>
-          <div class="tile is-child column m-2">2 days</div>
-          <div class="tile is-child column m-2">3 days</div>
-          <div class="tile is-child column m-2">4 days</div>
-        </div>
-      </section>
     </main>
   </body>
 </html>
