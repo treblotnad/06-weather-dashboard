@@ -1,22 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Weather Dashboard</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
     />
-    <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
-    <header>
-      <h1>Weather Dashboard</h1>
+    <header class="section has-background-info columns">
+      <div class="column has-text-white is-offset-6 is-7">
+        <h1 class="title is-2 has-text-white">Weather Dashboard</h1>
+      </div>
     </header>
-    <aside>
-      <h2>Search for a City:</h2>
-    </aside>
-    <main></main>
+    <main class="section columns">
+      <aside class="column is-3">
+        <div class="field">
+          <label class="label is-size-3 has-text-info"
+            >Search for a City:</label
+          >
+          <div class="control">
+            <input
+              class="input is-size-5 mb-5"
+              type="text"
+              placeholder="City"
+            />
+          </div>
+          <div class="control">
+            <button
+              class="button is-link is-fullwidth is-size-5 has-background-info"
+              type="submit"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </aside>
+      <section class="column"></section>
+    </main>
   </body>
 </html>
