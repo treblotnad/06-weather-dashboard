@@ -27,6 +27,7 @@
       >
         <div class="columns">
           <div
+            id="today"
             class="column mb-1 is-size-3-mobile is-size-1-tablet is-full has-text-centered"
           >
             Current Conditions
@@ -34,26 +35,26 @@
         </div>
         <div class="columns is-desktop">
           <div class="column has-text-centered">
-            <article class="card">day forcast</article>
+            <article id="day1" class="card">day forcast</article>
           </div>
           <div class="column has-text-centered">
-            <article class="card">day forcast</article>
+            <article id="day2" class="card">day forcast</article>
           </div>
           <div class="column has-text-centered">
-            <article class="card">day forcast</article>
+            <article id="day3" class="card">day forcast</article>
           </div>
           <div class="column has-text-centered">
-            <article class="card">day forcast</article>
+            <article id="day4" class="card">day forcast</article>
           </div>
           <div class="column has-text-centered">
-            <article class="card">day forcast</article>
+            <article id="day5" class="card">day forcast</article>
           </div>
         </div>
       </section>
       <aside
         class="column is-10-mobile is-8-tablet is-3-desktop is-offset-1-mobile is-offset-2-tablet is-offset-0-desktop"
       >
-        <div class="field">
+        <form class="field" id="searchField">
           <label
             class="label is-size-4-desktop has-text-info is-size-5-tablet is-size-3-mobile"
             >Search for a City:</label
@@ -67,13 +68,14 @@
           </div>
           <div class="control">
             <button
+              id="searchBtn"
               class="button is-link is-fullwidth is-size-5 has-background-info"
               type="submit"
             >
               Search
             </button>
           </div>
-        </div>
+        </form>
       </aside>
     </main>
     <script src="assets/js/script.js"></script>
