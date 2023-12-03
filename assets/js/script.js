@@ -89,7 +89,6 @@ function renderWeather(data, cardAddedTo, fontSize) {
   var todayTemp = document.createElement("p");
   var todayWind = document.createElement("p");
   var todayHumidity = document.createElement("p");
-  console.log(data);
   weatherIcon.setAttribute(
     "src",
     "https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png"
@@ -140,6 +139,10 @@ function searchForecast(lat, lon) {
     })
     .then(function (data) {
       for (let i = 0; i < 5; i++) {
+        var timeZoneAdj = Math.floor(data.city.timezone / (60 * 60 * 3));
+        if (8 * i + (4 - timeZoneAdj) > 39) {
+          return;
+        }
         var dayCard = document.getElementById("day" + (i + 1));
         dayCard.textContent = dayjs()
           .add(i + 1, "day")
@@ -153,8 +156,6 @@ function searchForecast(lat, lon) {
           "is-size-4",
           "p-3"
         );
-        var timeZoneAdj = Math.floor(data.city.timezone / (60 * 60 * 3));
-        
         renderWeather(data.list[8 * i + (4 - timeZoneAdj)], dayCard, 6);
       }
     });
@@ -168,6 +169,7 @@ function saveSearch(city) {
 searchBtn.addEventListener("click", function (e) {
   e.preventDefault();
   searchCity(searchText.value);
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 clearBtn.addEventListener("click", function (e) {
