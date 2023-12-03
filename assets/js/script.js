@@ -12,6 +12,7 @@ var requestCoordinates =
   "http://api.openweathermap.org/geo/1.0/direct?limit=1&appid=" + apiKey + "&";
 
 var searchBtn = document.getElementById("searchBtn");
+var clearBtn = document.getElementById("clearBtn");
 var searchText = document.getElementById("searchText");
 var todayConditions = document.getElementById("today");
 
@@ -44,7 +45,7 @@ function searchCity(city) {
         " " +
         dayjs().format("(M/D/YY)");
 
-      searchWeather(cityLat, cityLon);
+      searchWeather(cityLat, cityLon, city);
       searchForecast(cityLat, cityLon);
     });
 }
@@ -69,7 +70,7 @@ function searchCity(city) {
 // }
 
 //function for current weather fetch
-function searchWeather(lat, lon) {
+function searchWeather(lat, lon, city) {
   var requestWeatherURL = requestCurrent + "&lat=" + lat + "&lon=" + lon;
   fetch(requestWeatherURL)
     .then(function (response) {
@@ -78,14 +79,17 @@ function searchWeather(lat, lon) {
     })
     .then(function (data) {
       renderWeather(data, todayConditions, 3);
+      saveSearch(city);
     });
 }
+//renders weather data for both current and 5 day forecast
 function renderWeather(data, cardAddedTo, fontSize) {
   var weatherIcon = document.createElement("img");
   var weatherDesc = document.createElement("p");
   var todayTemp = document.createElement("p");
   var todayWind = document.createElement("p");
   var todayHumidity = document.createElement("p");
+  console.log(data);
   weatherIcon.setAttribute(
     "src",
     "https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png"
@@ -149,12 +153,15 @@ function searchForecast(lat, lon) {
           "is-size-4",
           "p-3"
         );
-        renderWeather(data.list[8 * i + 4], dayCard, 6);
+        var timeZoneAdj = Math.floor(data.city.timezone / (60 * 60 * 3));
+        
+        renderWeather(data.list[8 * i + (4 - timeZoneAdj)], dayCard, 6);
       }
     });
 }
-
-function saveSearch() {
+//saves recent search to local storage and creates button
+function saveSearch(city) {
+  localStorage.setItem(localStorage.length, city);
   //each working search gets added to local storage array with index increasing
 }
 
@@ -163,5 +170,9 @@ searchBtn.addEventListener("click", function (e) {
   searchCity(searchText.value);
 });
 
-// conditions as graphic
+clearBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  localStorage.clear();
+});
+
 //history function needed
