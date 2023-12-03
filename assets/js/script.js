@@ -29,7 +29,12 @@ function searchCity(city) {
       var cityLon = data[0].lon;
       var cityCountry = data[0].country;
       var cityState = data[0].state;
-      todayConditions.classList.add("has-text-left", "is-size-3-mobile");
+      todayConditions.classList.add(
+        "has-text-left",
+        "is-size-3-mobile",
+        "has-text-weight-bold",
+        "box"
+      );
       todayConditions.textContent =
         city +
         " " +
@@ -37,7 +42,7 @@ function searchCity(city) {
         ", " +
         cityCountry +
         " " +
-        dayjs().format("M/D/YY");
+        dayjs().format("(M/D/YY)");
 
       searchWeather(cityLat, cityLon);
       searchForecast(cityLat, cityLon);
@@ -72,34 +77,53 @@ function searchWeather(lat, lon) {
       return response.json();
     })
     .then(function (data) {
-      renderWeather(data);
+      renderWeather(data, todayConditions, 3);
     });
 }
-function renderWeather(data) {
+function renderWeather(data, cardAddedTo, fontSize) {
+  var weatherIcon = document.createElement("img");
+  var weatherDesc = document.createElement("p");
   var todayTemp = document.createElement("p");
   var todayWind = document.createElement("p");
   var todayHumidity = document.createElement("p");
+  weatherIcon.setAttribute(
+    "src",
+    "https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png"
+  );
+
+  weatherDesc.textContent = data.weather[0].description;
+  weatherDesc.classList.add(
+    "has-text-left",
+    "is-size-4-mobile",
+    "is-size-" + fontSize + "-tablet",
+    "has-text-weight-normal"
+  );
+  cardAddedTo.appendChild(weatherDesc);
+  cardAddedTo.appendChild(weatherIcon);
   todayTemp.textContent = "Temp: " + data.main.temp + "\u00B0 F";
   todayTemp.classList.add(
     "has-text-left",
     "is-size-4-mobile",
-    "is-size-3-tablet"
+    "is-size-" + fontSize + "-tablet",
+    "has-text-weight-normal"
   );
-  todayConditions.appendChild(todayTemp);
+  cardAddedTo.appendChild(todayTemp);
   todayWind.textContent = "Wind: " + data.wind.speed + " MPH";
   todayWind.classList.add(
     "has-text-left",
     "is-size-4-mobile",
-    "is-size-3-tablet"
+    "is-size-" + fontSize + "-tablet",
+    "has-text-weight-normal"
   );
-  todayConditions.appendChild(todayWind);
+  cardAddedTo.appendChild(todayWind);
   todayHumidity.textContent = "Humidity: " + data.main.humidity + "%";
   todayHumidity.classList.add(
     "has-text-left",
     "is-size-4-mobile",
-    "is-size-3-tablet"
+    "is-size-" + fontSize + "-tablet",
+    "has-text-weight-normal"
   );
-  todayConditions.appendChild(todayHumidity);
+  cardAddedTo.appendChild(todayHumidity);
 }
 
 //function for forecast fetch
@@ -111,8 +135,27 @@ function searchForecast(lat, lon) {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
+      for (let i = 0; i < 5; i++) {
+        var dayCard = document.getElementById("day" + (i + 1));
+        dayCard.textContent = dayjs()
+          .add(i + 1, "day")
+          .format("M/D/YY");
+        dayCard.classList.add(
+          "card",
+          "has-text-left",
+          "has-text-weight-bold",
+          "has-background-info",
+          "has-text-white",
+          "is-size-4",
+          "p-3"
+        );
+        renderWeather(data.list[8 * i + 4], dayCard, 6);
+      }
     });
+}
+
+function saveSearch() {
+  //each working search gets added to local storage array with index increasing
 }
 
 searchBtn.addEventListener("click", function (e) {
@@ -121,10 +164,4 @@ searchBtn.addEventListener("click", function (e) {
 });
 
 // conditions as graphic
-//temp
-//wind
-//humidity
-
-//funciton for rendering saved history
-//function for rendering forecast
-//event listener for history clicks
+//history function needed
