@@ -15,7 +15,7 @@ var searchBtn = document.getElementById("searchBtn");
 var clearBtn = document.getElementById("clearBtn");
 var searchText = document.getElementById("searchText");
 var todayConditions = document.getElementById("today");
-
+var searchDiv = document.createElement("div");
 // function to get coordinates from city search
 function searchCity(city) {
   var requestURL = requestCoordinates + "&q=" + city;
@@ -37,7 +37,8 @@ function searchCity(city) {
         "box"
       );
       todayConditions.textContent =
-        city +
+        city.charAt(0).toUpperCase() +
+        city.slice(1) +
         " " +
         cityState +
         ", " +
@@ -50,6 +51,7 @@ function searchCity(city) {
     });
 }
 
+// may try to get working if enough time!
 // var requestCoordinatesZip =
 //   "http://api.openweathermap.org/geo/1.0/zip?zip=E14,GB&appid=" + apiKey;
 //
@@ -82,6 +84,7 @@ function searchWeather(lat, lon, city) {
       saveSearch(city);
     });
 }
+
 //renders weather data for both current and 5 day forecast
 function renderWeather(data, cardAddedTo, fontSize) {
   var weatherIcon = document.createElement("img");
@@ -162,19 +165,52 @@ function searchForecast(lat, lon) {
 }
 //saves recent search to local storage and creates button
 function saveSearch(city) {
+  for (let i = 0; i < localStorage.length; i++) {
+    if (localStorage.getItem(i) == city) {
+      return;
+    }
+  }
   localStorage.setItem(localStorage.length, city);
-  //each working search gets added to local storage array with index increasing
+  renderHistory();
+}
+
+//
+function renderHistory() {
+  searchDiv.innerHTML = "";
+  for (let i = localStorage.length - 1; i > -1; i--) {
+    var historyBtn = document.createElement("button");
+    historyBtn.textContent = localStorage[i];
+    historyBtn.classList.add(
+      "button",
+      "is-fullwidth",
+      "is-size-5",
+      "history",
+      "has-background-grey",
+      "has-text-white",
+      "mt-3"
+    );
+    searchDiv.appendChild(historyBtn);
+  }
+  searchAside.appendChild(searchDiv);
 }
 
 searchBtn.addEventListener("click", function (e) {
   e.preventDefault();
-  searchCity(searchText.value);
+  searchCity(searchText.value.toLowerCase().trim());
+  searchText.value = "";
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 clearBtn.addEventListener("click", function (e) {
   e.preventDefault();
   localStorage.clear();
+  renderHistory();
 });
 
-//history function needed
+searchDiv.addEventListener("click", function (e) {
+  e.preventDefault();
+  var clickedBtn = e.target.textContent;
+  searchCity(clickedBtn);
+});
+
+renderHistory();
