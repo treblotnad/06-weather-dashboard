@@ -193,6 +193,7 @@ searchDiv.addEventListener("click", function (e) {
   e.preventDefault();
   var clickedBtn = e.target.textContent;
   searchCity(clickedBtn);
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 renderHistory();
