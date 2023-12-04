@@ -159,6 +159,7 @@ function searchForecast(lat, lon) {
           "is-size-4",
           "p-3"
         );
+        console.log(data);
         renderWeather(data.list[8 * i + (4 - timeZoneAdj)], dayCard, 6);
       }
     });
