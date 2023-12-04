@@ -17,14 +17,19 @@ var searchText = document.getElementById("searchText");
 var todayConditions = document.getElementById("today");
 var searchDiv = document.createElement("div");
 var forecastEl = document.getElementById("forecast");
+var articles = document.getElementsByTagName("article");
 // function to get coordinates from city search
 function searchCity(city) {
   var requestURL = requestCoordinates + "&q=" + city;
   fetch(requestURL)
     .then(function (response) {
+      articles[0].style.display = "none";
+      articles[1].style.display = "none";
+      articles[2].style.display = "none";
+      articles[3].style.display = "none";
+      articles[4].style.display = "none";
       todayConditions.textContent = "Error occured, please check city input.";
-      if (!response.ok) {
-      }
+      if (!response.ok) throw new Error(response.text);
       return response.json();
     })
     .then(function (data) {
@@ -50,6 +55,11 @@ function searchCity(city) {
 
       searchWeather(cityLat, cityLon, city);
       searchForecast(cityLat, cityLon);
+      articles[0].style.display = "block";
+      articles[2].style.display = "block";
+      articles[3].style.display = "block";
+      articles[1].style.display = "block";
+      articles[4].style.display = "block";
     });
 }
 
@@ -74,6 +84,7 @@ function renderWeather(data, cardAddedTo, fontSize) {
   var todayTemp = document.createElement("p");
   var todayWind = document.createElement("p");
   var todayHumidity = document.createElement("p");
+
   weatherIcon.setAttribute(
     "src",
     "https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png"
@@ -193,7 +204,9 @@ clearBtn.addEventListener("click", function (e) {
 
 searchDiv.addEventListener("click", function (e) {
   e.preventDefault();
-
+  if (!e.target.classList.contains("history")) {
+    return;
+  }
   var clickedBtn = e.target.textContent;
   searchCity(clickedBtn);
   window.scrollTo({ top: 0, behavior: "smooth" });
