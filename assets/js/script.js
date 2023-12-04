@@ -16,13 +16,15 @@ var clearBtn = document.getElementById("clearBtn");
 var searchText = document.getElementById("searchText");
 var todayConditions = document.getElementById("today");
 var searchDiv = document.createElement("div");
+var forecastEl = document.getElementById("forecast");
 // function to get coordinates from city search
 function searchCity(city) {
   var requestURL = requestCoordinates + "&q=" + city;
   fetch(requestURL)
     .then(function (response) {
       todayConditions.textContent = "Error occured, please check city input.";
-      if (!response.ok) throw new Error(response.text);
+      if (!response.ok) {
+      }
       return response.json();
     })
     .then(function (data) {
@@ -191,6 +193,7 @@ clearBtn.addEventListener("click", function (e) {
 
 searchDiv.addEventListener("click", function (e) {
   e.preventDefault();
+
   var clickedBtn = e.target.textContent;
   searchCity(clickedBtn);
   window.scrollTo({ top: 0, behavior: "smooth" });
