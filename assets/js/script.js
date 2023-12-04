@@ -9,7 +9,7 @@ var requestWeather =
   apiKey;
 
 var requestCoordinates =
-  "http://api.openweathermap.org/geo/1.0/direct?limit=1&appid=" + apiKey + "&";
+  "https://api.openweathermap.org/geo/1.0/direct?limit=1&appid=" + apiKey + "&";
 
 var searchBtn = document.getElementById("searchBtn");
 var clearBtn = document.getElementById("clearBtn");
@@ -86,7 +86,6 @@ function renderWeather(data, cardAddedTo, fontSize) {
   );
   cardAddedTo.appendChild(weatherDesc);
   cardAddedTo.appendChild(weatherIcon);
-  console.log(data.weather[0].icon);
   todayTemp.textContent = "Temp: " + data.main.temp + "\u00B0 F";
   todayTemp.classList.add(
     "has-text-left",
@@ -95,8 +94,8 @@ function renderWeather(data, cardAddedTo, fontSize) {
     "has-text-weight-normal"
   );
   cardAddedTo.appendChild(todayTemp);
-  // todayWind.textContent = "Wind: " + data.wind.speed + " MPH";
-  todayWind.textContent = "UTC: " + data.dt_txt;
+  todayWind.textContent = "Wind: " + data.wind.speed + " MPH";
+
   todayWind.classList.add(
     "has-text-left",
     "is-size-4-mobile",
@@ -144,7 +143,6 @@ function searchForecast(lat, lon) {
 
         renderWeather(data.list[8 * i + (3 - timeZoneAdj)], dayCard, 6);
       }
-      console.log(data.list);
     });
 }
 //saves recent search to local storage and creates button
