@@ -135,6 +135,7 @@ function searchForecast(lat, lon) {
       return response.json();
     })
     .then(function (data) {
+      console.log(data);
       for (let i = 0; i < 5; i++) {
         var timeZoneAdj = Math.floor(data.city.timezone / (60 * 60 * 3));
         if (8 * i + (4 - timeZoneAdj) > 39) {
@@ -153,7 +154,7 @@ function searchForecast(lat, lon) {
           "is-size-4",
           "p-3"
         );
-
+        console.log(timeZoneAdj);
         renderWeather(data.list[8 * i + (3 - timeZoneAdj)], dayCard, 6);
       }
     });
