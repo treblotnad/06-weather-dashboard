@@ -135,9 +135,18 @@ function searchForecast(lat, lon) {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
+      //pick out UTC and TimeZone for finding correct index to create first card, noon local time is target for forecast cards, plus or minus 2 hours
+      var timeZoneAdj = Math.trunc(data.city.timezone / (60 * 60 * 3));
+      for (let i = 0; i < data.list.length; i++) {
+        if (
+          dayjs(data.list[i].dt_txt).format("M/D/YY H") ==
+          dayjs().add(1, "day").format("M/D/YY") + " 12"
+        ) {
+          var indexTimeOffset = i;
+        }
+      }
+
       for (let i = 0; i < 5; i++) {
-        var timeZoneAdj = Math.floor(data.city.timezone / (60 * 60 * 3));
         if (8 * i + (4 - timeZoneAdj) > 39) {
           return;
         }
@@ -154,8 +163,12 @@ function searchForecast(lat, lon) {
           "is-size-4",
           "p-3"
         );
-        console.log(timeZoneAdj);
-        renderWeather(data.list[8 * i + (3 - timeZoneAdj)], dayCard, 6);
+
+        renderWeather(
+          data.list[8 * i + (indexTimeOffset - timeZoneAdj)],
+          dayCard,
+          6
+        );
       }
     });
 }
