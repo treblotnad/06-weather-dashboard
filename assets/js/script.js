@@ -147,7 +147,7 @@ function searchForecast(lat, lon) {
       }
 
       for (let i = 0; i < 5; i++) {
-        if (8 * i + (4 - timeZoneAdj) > 39) {
+        if (8 * i + (indexTimeOffset - timeZoneAdj) > 39) {
           return;
         }
         var dayCard = document.getElementById("day" + (i + 1));
